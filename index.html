@@ -232,70 +232,71 @@
     </div>
 
     <script>
-        const dice1 = document.getElementById('dice1');
-        const dice2 = document.getElementById('dice2');
-        const button = document.getElementById('rollDice');
-        const addRestaurantButton = document.getElementById('addRestaurant');
-        const inputText = document.getElementById('inputText');
-        const restaurantList = document.getElementById('restaurantList');
-        const resultDisplay = document.getElementById('result');
+const dice1 = document.getElementById('dice1');
+const dice2 = document.getElementById('dice2');
+const button = document.getElementById('rollDice');
+const addRestaurantButton = document.getElementById('addRestaurant');
+const inputText = document.getElementById('inputText');
+const restaurantList = document.getElementById('restaurantList');
+const resultDisplay = document.getElementById('result');
 
-        let restaurants = [];
+let restaurants = [];  // This will hold the inputted restaurants
 
-        // Add a restaurant to the list
-        addRestaurantButton.addEventListener('click', () => {
-            const restaurantName = inputText.value.trim();
+// Add a restaurant to the list
+addRestaurantButton.addEventListener('click', () => {
+    const restaurantName = inputText.value.trim();
 
-            if (restaurantName && !restaurants.includes(restaurantName)) {
-                if (restaurants.length < 12) {
-                    restaurants.push(restaurantName);
-                    const listItem = document.createElement('li');
-                    listItem.textContent = restaurantName;
-                    restaurantList.appendChild(listItem);
-                } else {
-                    resultDisplay.textContent = "Hala oa na yung choices";
-                    return;
-                }
-            }
-
-            inputText.value = ''; // Clear the input field
-        });
-
-        // Generate rotation for dice
-        function getRotationTransform(rollValue) {
-            switch (rollValue) {
-                case 1: return 'rotateX(0deg) rotateY(0deg)';
-                case 2: return 'rotateX(0deg) rotateY(-90deg)';
-                case 3: return 'rotateX(0deg) rotateY(180deg)';
-                case 4: return 'rotateX(0deg) rotateY(90deg)';
-                case 5: return 'rotateX(-90deg) rotateY(0deg)';
-                case 6: return 'rotateX(90deg) rotateY(0deg)';
-                default: return '';
-            }
+    if (restaurantName && !restaurants.includes(restaurantName)) {
+        if (restaurants.length < 12) {
+            restaurants.push(restaurantName);  // Store the inputted restaurant
+            const listItem = document.createElement('li');
+            listItem.textContent = restaurantName;
+            restaurantList.appendChild(listItem);
+        } else {
+            resultDisplay.textContent = "Hala oa na yung choices";  // Max restaurants reached
+            return;
         }
+    }
 
-        button.addEventListener('click', () => {
-            // Roll dice with random values (1 to 6)
-            const dice1Roll = Math.floor(Math.random() * 6) + 1;
-            const dice2Roll = Math.floor(Math.random() * 6) + 1;
+    inputText.value = ''; // Clear the input field
+});
 
-            // Rotate dice to the correct face
-            dice1.style.transform = getRotationTransform(dice1Roll);
-            dice2.style.transform = getRotationTransform(dice2Roll);
+// Generate rotation for dice
+function getRotationTransform(rollValue) {
+    switch (rollValue) {
+        case 1: return 'rotateX(0deg) rotateY(0deg)';
+        case 2: return 'rotateX(0deg) rotateY(-90deg)';
+        case 3: return 'rotateX(0deg) rotateY(180deg)';
+        case 4: return 'rotateX(0deg) rotateY(90deg)';
+        case 5: return 'rotateX(-90deg) rotateY(0deg)';
+        case 6: return 'rotateX(90deg) rotateY(0deg)';
+        default: return '';
+    }
+}
 
-            // Check if there are restaurants
-            if (restaurants.length === 0) {
-                resultDisplay.textContent = "Mag add ka muna ahhh";
-                return;
-            }
+button.addEventListener('click', () => {
+    // Roll dice with random values (1 to 6)
+    const dice1Roll = Math.floor(Math.random() * 6) + 1;
+    const dice2Roll = Math.floor(Math.random() * 6) + 1;
 
-            // Choose a random restaurant from the list
-            const randomRestaurant = restaurants[Math.floor(Math.random() * restaurants.length)];
-            
-            // Display the rolled values and the selected restaurant
-            resultDisplay.textContent = `You rolled ${dice1Roll + dice2Roll}: ${randomRestaurant}`;
+    // Rotate dice to the correct face
+    dice1.style.transform = getRotationTransform(dice1Roll);
+    dice2.style.transform = getRotationTransform(dice2Roll);
 
-        });
+    // Check if there are restaurants
+    if (restaurants.length === 0) {
+        resultDisplay.textContent = "Mag add ka muna ahhh";  // If no restaurants
+        return;
+    }
+
+    // Use the total rolled value to select an autofill restaurant
+    const totalRoll = (dice1Roll + dice2Roll - 1) % restaurants.length;
+    const selectedRestaurant = restaurants[totalRoll];
+
+    // Display the rolled values and the selected restaurant
+    resultDisplay.textContent = `You rolled ${dice1Roll + dice2Roll}: ${selectedRestaurant}`;
+});
+
     </script>
 
     <div class="copyright">
