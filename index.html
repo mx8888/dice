@@ -129,6 +129,23 @@
             font-size: 0.8rem;
             color: #333;
         }
+
+        .copyright {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Press Start 2P', cursive;
+        font-size: 0.4rem;
+        color: #377bca;
+        text-align: center;
+        margin: 0;
+    }
+
+    .copyright p {
+        margin: 0;
+    }
+
     </style>
 </head>
 <body>
@@ -227,6 +244,9 @@
             resultDisplay.textContent = `Rolled ${totalRoll}: ${randomRestaurant}`;
         });
     </script>
+     <div class="copyright">
+        <p>© 2024 Made by: Alex Miral</p>
+    </div>
 </body>
 </html>
 
