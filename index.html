@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Realistic 3D Dice</title>
+    <title>Dice</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <style>
@@ -240,20 +240,20 @@ const inputText = document.getElementById('inputText');
 const restaurantList = document.getElementById('restaurantList');
 const resultDisplay = document.getElementById('result');
 
-let restaurants = [];  // This will hold the inputted restaurants
+let restaurants = [];  //  hold the inputs
 
-// Add a restaurant to the list
+// Add any to the list
 addRestaurantButton.addEventListener('click', () => {
     const restaurantName = inputText.value.trim();
 
     if (restaurantName && !restaurants.includes(restaurantName)) {
         if (restaurants.length < 12) {
-            restaurants.push(restaurantName);  // Store the inputted restaurant
+            restaurants.push(restaurantName);  // Store inputs
             const listItem = document.createElement('li');
             listItem.textContent = restaurantName;
             restaurantList.appendChild(listItem);
         } else {
-            resultDisplay.textContent = "Hala oa na yung choices";  // Max restaurants reached
+            resultDisplay.textContent = "Hala oa na yung choices";  // Max input
             return;
         }
     }
@@ -261,7 +261,7 @@ addRestaurantButton.addEventListener('click', () => {
     inputText.value = ''; // Clear the input field
 });
 
-// Generate rotation for dice
+// Dice rotation
 function getRotationTransform(rollValue) {
     switch (rollValue) {
         case 1: return 'rotateX(0deg) rotateY(0deg)';
@@ -279,21 +279,21 @@ button.addEventListener('click', () => {
     const dice1Roll = Math.floor(Math.random() * 6) + 1;
     const dice2Roll = Math.floor(Math.random() * 6) + 1;
 
-    // Rotate dice to the correct face
+    // Dice always on correct face 
     dice1.style.transform = getRotationTransform(dice1Roll);
     dice2.style.transform = getRotationTransform(dice2Roll);
 
-    // Check if there are restaurants
+    // Checker
     if (restaurants.length === 0) {
         resultDisplay.textContent = "Mag add ka muna ahhh";  // If no restaurants
         return;
     }
 
-    // Use the total rolled value to select an autofill restaurant
+    // autofill input
     const totalRoll = (dice1Roll + dice2Roll - 1) % restaurants.length;
     const selectedRestaurant = restaurants[totalRoll];
 
-    // Display the rolled values and the selected restaurant
+    // display value
     resultDisplay.textContent = `You rolled ${dice1Roll + dice2Roll}: ${selectedRestaurant}`;
 });
 
